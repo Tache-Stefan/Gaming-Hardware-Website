@@ -1,0 +1,64 @@
+body {
+    background-color: #D3D9D4;
+    --padding: 20px;
+}
+
+#grid-pagina {
+    display: grid;
+    grid-template-areas: "jocuri dlc"
+                         "hardware hardware";
+}
+
+#jocuri {
+    color: #D3D9D4;
+    grid-area: jocuri;
+    background-color: #2E3944;
+    padding: var(--padding);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#dlc {
+    color: #D3D9D4;
+    grid-area: dlc;
+    background-color: #124E66;
+    padding: var(--padding);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#hardware {
+    color: #2E3944;
+    grid-area: hardware;
+    background-color: #748D92;
+    padding: var(--padding);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 800px) {
+    #grid-pagina {
+        display: block;
+    }
+}
+
+#grid-container {
+    display: grid;
+    grid-template-areas: "pdf-red-dead trailers";
+    gap: 20px;
+    align-items: center;
+}
+
+#pdf-red-dead {
+    grid-area: pdf-red-dead;
+    padding: var(--padding);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+#trailers {
+    grid-area: trailers;
+    padding: var(--padding);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
