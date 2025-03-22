@@ -1,64 +1,182 @@
 body {
-    background-color: #D3D9D4;
+    --color1: #212A31;
+    --color2: #2E3944;
+    --color3: #124E66;
+    --color4: #748D92;
+    --color5: #D3D9D4;
     --padding: 20px;
+    background-color: var(--color5);
+    font-size: 16px;
+    transition: font-size 0.3s ease;
 }
 
-#grid-pagina {
+.bold-text {
+    font-weight: bold;
+}
+
+.italic-text {
+    font-style: italic;
+}
+
+.roboto-condensed-special {
+    font-family: "Roboto Condensed", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#grid-initial {
     display: grid;
-    grid-template-areas: "jocuri dlc"
-                         "hardware hardware";
+    grid-template-areas:
+        "welcome welcome welcome"
+        "hardware jocuri jocuri"
+        "hardware dlc dlc"
+        "img-read-dead trailers-red-dead pdf-red-dead"
+        "console-map console-map console-map";
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+#welcome {
+    grid-area: welcome;
+    text-align: center;
 }
 
 #jocuri {
-    color: #D3D9D4;
     grid-area: jocuri;
-    background-color: #2E3944;
+    color: var(--color5);
+    background-color: var(--color2);
     padding: var(--padding);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #dlc {
-    color: #D3D9D4;
     grid-area: dlc;
-    background-color: #124E66;
+    color: var(--color5);
+    background-color: var(--color3);
     padding: var(--padding);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #hardware {
-    color: #2E3944;
     grid-area: hardware;
-    background-color: #748D92;
+    color: var(--color2);
+    background-color: var(--color4);
     padding: var(--padding);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (max-width: 800px) {
-    #grid-pagina {
-        display: block;
+#console-map {
+    grid-area: console-map;
+    text-align: center;
+}
+
+.trailers-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.trailers-tabs > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 50px;
+    border: none;
+    background-color: var(--color4);
+    text-align: center;
+    text-decoration: none;
+    color: var(--color1);
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
+}
+
+.trailers-tabs > a:hover {
+    background-color: var(--color3);
+    color: var(--color5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.trailers-tabs > a:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1200px) {
+    #grid-initial {
+        grid-template-areas:
+            "welcome"
+            "hardware"
+            "jocuri"
+            "dlc"
+            "img-read-dead"
+            "trailers-red-dead"
+            "pdf-red-dead"
+            "console-map";
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: var(--padding);
+    }
+
+    .trailers-tabs {
+        flex-direction: column;
+    }
+
+    .trailers-tabs > a {
+        width: 100%;
+        padding: var(--padding);
+        text-align: center;
     }
 }
 
-#grid-container {
-    display: grid;
-    grid-template-areas: "pdf-red-dead trailers";
-    gap: 20px;
-    align-items: center;
+img, video {
+    width: 90%;
+    max-width: 800px;
+    min-width: 300px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
 }
 
-#pdf-red-dead {
-    grid-area: pdf-red-dead;
-    padding: var(--padding);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+@media (max-width: 1200px) and (min-width: 801px) {
+    body {
+        font-size: 14px;
+        transition: font-size 0.3s ease;
+    }
+
+    #grid-initial {
+        gap: 10px;
+    }
+
+    img, video {
+        width: 95%;
+        max-width: 700px;
+        min-width: 250px;
+    }
 }
 
-#trailers {
-    grid-area: trailers;
-    padding: var(--padding);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+@media (max-width: 800px) {
+    body {
+        font-size: 12px;
+        transition: none;
+    }
+
+    #grid-initial {
+        gap: 5px;
+    }
+
+    img, video {
+        width: 100%;
+        max-width: 500px;
+        min-width: 200px;
+    }
 }

@@ -1,0 +1,85 @@
+#game-sales {
+    margin: 30px auto;
+    padding: var(--padding);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid var(--color3);
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+th {
+    background-color: var(--color2);
+    color: var(--color5);
+    font-weight: bold;
+}
+
+td {
+    background-color: var(--color4);
+    color: var(--color1);
+}
+
+caption {
+    caption-side: bottom;
+    margin-top: 10px;
+    font-style: italic;
+    color: var(--color1);
+}
+
+table tr th:nth-child(even), table tr td:nth-child(even) {
+    background-color: var(--color2);
+    color: var(--color5);
+}
+
+table tr th:nth-child(odd), table tr td:nth-child(odd) {
+    background-color: var(--color4);
+    color: var(--color1);
+}
+
+table tr {
+    transition: background-color 0.3s ease;
+}
+
+table tr:hover td,
+table tr:hover th {
+    background-color: var(--color3);
+    color: var(--color5);
+}
+
+table tr:hover td:hover,
+table tr:hover th:hover {
+    background-color: var(--color1);
+    color: var(--color5);
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 1200px) {
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table-container table {
+        min-width: 800px;
+    }
+}
