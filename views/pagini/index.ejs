@@ -2,64 +2,19 @@
 <html lang = "ro">
     <head>
         <title>Gaming & Hardware</title>
-        <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
         <meta name = "keywords" content = "jocuri, gaming, PC, PS5, XBOX">
         <meta name = "description" content = "Jocuri digitale si accesorii.">
-        <meta name = "author" content = "Tache Stefan">
-        <link rel = "icon" type = "image/png" href = "resources/img/favicon/favicon-96x96.png" sizes = "96x96">
-        <link rel = "icon" type = "image/svg+xml" href = "resources/img/favicon/favicon.svg">
-        <link rel = "shortcut icon" href = "resources/img/favicon/favicon.ico">
-        <link rel = "apple-touch-icon" sizes = "180x180" href = "resources/img/favicon/apple-touch-icon.png">
-        <link rel = "manifest" href = "resources/img/favicon/site.webmanifest">
-        <link rel = "stylesheet" href = "resources/css/general.css" type = "text/css">
-        <link rel = "stylesheet" href = "resources/css/link-top.css" type = "text/css">
-        <link rel = "stylesheet" href = "resources/css/table.css" type = "text/css">
-        <link rel = "stylesheet" href = "resources/css/nav.css" type = "text/css">
-        <link rel = "stylesheet" href = "resources/css/print.css" type = "text/css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <%- include("../fragmente/head.ejs") %>
     </head>
     <body>
-        <header>
-            <div class = "roboto-condensed-special">
-                <h1>Gaming & Hardware</h1>
-            </div>
-            <nav>
-                <label id="hamburger" for="ch-menu">
-                    <img src="resources/img/Hamburger_menu.png" alt="menu">
-                </label>
-                <input id="ch-menu" type="checkbox">
-                <ul>
-                    <li class="home-icon">
-                        <a href="#">
-                            <i class="fa-solid fa-house"></i>
-                            <span class="home-text">Home</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href = "#grid-initial">Jocuri & DLC-uri</a>
-                        <ul>
-                            <li><a href = "#jocuri">Jocuri</a></li>
-                            <li><a href = "#dlc">DLC-uri</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href = "#hardware">Hardware & Accesorii</a>
-                        <ul>
-                            <li><a href = "#tastaturi">Tastaturi</a></li>
-                            <li><a href = "#mouse">Mouse-uri</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        <%- include("../fragmente/header.ejs") %>
+
         <main>
             <div id = "grid-initial">
                 <section id = "welcome">
                     <h2>Bine ați venit!</h2>
+                    <p>IP: <%- locals.IP %></p>
                 </section>
                 <section id = "jocuri">
                     <h2>Jocuri</h2>
@@ -115,8 +70,6 @@
                     <figure>
                         <picture>
                             <img src = "/resources/img/red_dead_small.png" alt = "red_dead_img">
-                            <img src = "/resources/img/red_dead_medium.png" alt = "red_dead_img">
-                            <img src = "/resources/img/red_dead_large.png" alt = "red_dead_img">
                         </picture>
                         <figcaption>O imagine din jocul "Red Dead Redemption 2".</figcaption>
                     </figure>
@@ -129,12 +82,12 @@
                     <iframe id = "video" name="videoIframe" width="500" height="300" src="https://www.youtube.com/embed/gmA6MrX81z4"></iframe>
                 </div>
                 <div id = "pdf-red-dead">
-                    <embed id = "pdfdiv-red-dead" src="resources/pdf/rdr2.pdf" type="application/pdf" width="400" height="300">
+                    <embed id = "pdfdiv-red-dead" src="/resources/pdf/rdr2.pdf" type="application/pdf" width="400" height="300">
                 </div>
                 <div id = "console-map">
                     <figure>
                         <picture>
-                            <img src="resources/img/gaming.png" usemap="#consolemap" width="600" height="400" alt="Consoles Map">
+                            <img src="/resources/img/gaming.png" usemap="#consolemap" width="600" height="400" alt="Consoles Map">
                         </picture>
                         <figcaption>Consoles Map.</figcaption>
                     </figure>
@@ -199,29 +152,6 @@
                 </div>
             </div>
         </main>
-        <footer>
-            <address>
-                Telefon: <a href = "tel:+407123456789">+40 712 345 6789</a><br>
-                Adresa: <a href = "https://www.google.com/maps?q=Facultatea+de+Matematica+si+Informatica,+Bucuresti,+România" target = "_blank">FMI</a><br>
-                Email: <a href = "mailto:exemplu@fmi.ro">exemplu@fmi.ro</a><br>
-                <a href="https://wa.me/407123456789" target = "_blank">WhatsApp</a>
-            </address>
-            <a href = "./resources/img/icon2.png" download = "ceva.png">Download imagine</a><br>
-            <a href = "https://www.google.com" target = "_blank">Google</a><br>
-            <iframe
-                    src="https://www.google.com/maps/embed/v1/place?q=Faculty+of+Mathematics+and+Computer&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
-                    width="600"
-                    height="450"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy">
-            </iframe>
-            <small>
-                &copy;<time datetime="2025-02-24">2025</time>
-            </small>
-            <a href="#" title="Link top" id="link-top">
-                <div id="arrow">↓</div>
-            </a>
-        </footer>
+    <%- include("../fragmente/footer.ejs") %>
     </body>
 </html>

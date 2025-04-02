@@ -1,0 +1,152 @@
+@media print {
+    @page :left {
+        margin-left: 2cm;
+        margin-right: 1cm;
+    }
+
+    @page :right {
+        margin-left: 1cm;
+        margin-right: 2cm;
+    }
+
+    #hamburger, #ch-menu {
+        display: none !important;
+    }
+
+    body::after {
+        content: "Acesta este un proiect școlar!";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50%;
+        border: 4px double black;
+        padding: 10px;
+        font-size: 14pt;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    body::before {
+        content: "NUMELE\APRENUMELE";
+        position: fixed;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+        height: 10vh;
+        color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24pt;
+        font-weight: bold;
+        white-space: pre-line;
+        text-align: center;
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+    img, video, iframe, embed, object, picture, figure, figcaption, #link-top,
+    button, .trailers-tabs, footer iframe {
+        display: none !important;
+    }
+
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+
+    * {
+        background: none !important;
+        color: black !important;
+    }
+
+    #grid-initial {
+        display: block !important;
+    }
+
+    a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 24pt;
+        font-weight: bold;
+        margin-top: 100px;
+        margin-bottom: 20px;
+    }
+
+    header, nav {
+        display: block !important;
+    }
+
+    nav {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        position: static !important;
+        transform: none !important;
+        padding-top: 30px !important;
+    }
+
+    nav > ul {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        list-style: none !important;
+        margin-top: 50px !important;
+        padding-top: 20px !important;
+    }
+
+    nav ul {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        list-style: none !important;
+    }
+
+    nav ul ul {
+        list-style-type: circle !important;
+        margin-left: 20px;
+    }
+
+    nav li {
+        display: list-item !important;
+        margin-bottom: 5px;
+    }
+
+    nav a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+
+    nav ul li ul {
+        list-style: none !important;
+        margin-left: 0 !important;
+    }
+
+    nav::after {
+        content: "";
+        display: block;
+        page-break-after: always;
+    }
+
+    footer {
+        page-break-before: always;
+    }
+}
