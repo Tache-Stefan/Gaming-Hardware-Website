@@ -27,7 +27,7 @@
     }
 
     body::before {
-        content: "NUMELE\APRENUMELE";
+        content: "TACHE\ASTEFAN";
         position: fixed;
         top: 60%;
         left: 50%;
