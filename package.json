@@ -1,0 +1,30 @@
+{
+  "name": "lab-web",
+  "version": "1.0.0",
+  "description": "Site Gaming",
+  "keywords": [
+    "gaming",
+    "PC",
+    "Xbox",
+    "PS5"
+  ],
+  "homepage": "https://github.com/Tache-Stefan/Gaming-Hardware-Website#readme",
+  "bugs": {
+    "url": "https://github.com/Tache-Stefan/Gaming-Hardware-Website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tache-Stefan/Gaming-Hardware-Website.git"
+  },
+  "license": "ISC",
+  "author": "Tache Stefan",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}

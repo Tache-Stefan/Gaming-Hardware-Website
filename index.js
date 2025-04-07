@@ -10,6 +10,14 @@ obGlobal = {
     obErori : null
 }
 
+vect_folders = ["temp", "backup", "temp1"]
+for (let folder of vect_folders) {
+    let folder_path = path.join(__dirname, folder)
+    if (!fs.existsSync(folder_path)) {
+        fs.mkdirSync(folder_path)
+    }
+}
+
 function initErori(){
     let continut = fs.readFileSync(path.join(__dirname,"resources/json/erori.json")).toString("utf-8")
 
@@ -74,6 +82,10 @@ app.get("/abc", function(req, res, next) {
 
 app.get("/favicon.ico", function(req, res) {
     res.sendFile(path.join(__dirname, "resources/img/favicon/favicon.ico"))
+})
+
+app.get(/^\/resources\/[a-zA-Z0-9_\/]*$/, function(req, res, next) {
+    afisareEroare(res, 403)
 })
 
 app.get("/*.ejs", function(req, res, next) {
