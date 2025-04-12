@@ -1,13 +1,15 @@
 const express = require("express")
 const path = require("path")
 const fs = require("fs")
+const sharp = require("sharp")
 
 app = express()
 
 app.set("view engine", "ejs")
 
 obGlobal = {
-    obErori : null
+    obErori: null,
+    obImagini: null
 }
 
 vect_folders = ["temp", "backup", "temp1"]
@@ -31,6 +33,30 @@ function initErori(){
 }
 
 initErori()
+
+function initImagini(){
+    var continut = fs.readFileSync(path.join(__dirname, "resources/json/galerie.json")).toString("utf-8")
+
+    obGlobal.obImagini = JSON.parse(continut)
+    let vImagini = obGlobal.obImagini.imagini
+
+    let caleAbs = path.join(__dirname, obGlobal.obImagini.cale_galerie)
+    let caleAbsMediu = path.join(__dirname, obGlobal.obImagini.cale_galerie, "mediu")
+    if (!fs.existsSync(caleAbsMediu))
+        fs.mkdirSync(caleAbsMediu)
+
+    for (let imag of vImagini) {
+        [numeFis, ext] = imag.fisier.split(".")
+        let caleFisAbs = path.join(caleAbs, imag.fisier)
+        let caleFisMediuAbs = path.join(caleAbsMediu, numeFis + ".webp")
+        sharp(caleFisAbs).resize(300).toFile(caleFisMediuAbs)
+        imag.fisier_mediu = path.join("/", obGlobal.obImagini.cale_galerie, "mediu", numeFis + ".webp")
+        imag.fisier = path.join("/", obGlobal.obImagini.cale_galerie, imag.fisier)
+    }
+    console.log(obGlobal.obImagini)
+}
+
+initImagini()
 
 function afisareEroare(res, identificator, titlu, text, imagine){
     let eroare = obGlobal.obErori.info_erori.find(function(elem){
@@ -61,13 +87,14 @@ console.log("Cale fisier index.js: ", __filename)
 console.log("Folderul de lucru: ", process.cwd())
 
 app.use("/resources", express.static(path.join(__dirname, "resources")))
+// app.use("/node_modules", express.static(path.join(__dirname, "node_modules")))
 
 app.get("/cerere", function(req, res) {
     res.send("<p style = 'color: green;'>Buna ziua!</p>")
 })
 
 app.get(["/", "/home", "/index"], function(req, res) {
-    res.render("pagini/index", {IP: req.ip})
+    res.render("pagini/index", {IP: req.ip, imagini: obGlobal.obImagini.imagini})
 })
 
 app.get("/abc", function(req, res, next) {

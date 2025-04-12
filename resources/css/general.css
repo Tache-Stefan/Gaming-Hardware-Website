@@ -26,6 +26,7 @@ body {
     background-color: var(--color5);
     font-size: 16px;
     transition: font-size 0.3s ease;
+    margin: 5px;
 }
 
 .bold-text {
@@ -163,6 +164,72 @@ img, video {
     display: block;
     margin: 0 auto;
     border-radius: 6px;
+}
+
+video::cue {
+    background: linear-gradient(90deg, var(--color3), var(--color4));
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.video-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.responsive-video {
+    width: 90%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+main a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    background-image: radial-gradient(circle,
+                      var(--color2) 0%,
+                      var(--color2) 40%,
+                      transparent 80%,
+                      transparent 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0 0;
+    transition: background-size 0.4s ease;
+}
+
+main a:hover {
+    background-size: 100% 100%;
+}
+
+a[href^="http"]::before {
+    content: "⮳";
+    font-size: 1.5em;
+    margin-right: 0.25em;
+    vertical-align: middle;
+    color: blue;
+    transition: color 0.3s ease;
+}
+
+a[href^="http"]:hover::before {
+    color: var(--color4);
+}
+
+a:visited {
+    color: var(--color3);
+}
+
+a:active {
+    border: 2px solid var(--color4);
 }
 
 @media (max-width: 1200px) and (min-width: 801px) {

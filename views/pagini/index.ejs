@@ -151,6 +151,74 @@
                     </table>
                 </div>
             </div>
+            <div class="video-container">
+                <video  controls
+                        preload = "auto"
+                        poster="/resources/img/red_dead_poster.jpg"
+                        class="responsive-video">
+                        <source src="/resources/video/red_dead_trailer.mp4" type="video/mp4">
+                        <source src="/resources/video/red_dead_trailer.webm" type="video/webm">
+                        <track
+                                src="/resources/video/red_dead_ro.vtt"
+                                kind="subtitles"
+                                srclang="ro"
+                                label="Română"
+                                default>
+                        <track
+                                src="/resources/video/red_dead_en.vtt"
+                                kind="subtitles"
+                                srclang="en"
+                                label="English">
+                </video>
+            </div>
+            <section id="galerie-statica">
+                <h2>Galerie</h2>
+                <div id="grid-galerie">
+                    <%
+                    vect_luni = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie",
+                                 "octombrie", "noiembrie", "decembrie"]
+                    d = new Date()
+                    luna_curenta = vect_luni[d.getMonth()]
+
+                    for (let imag of locals.imagini) { %>
+                        <% if (imag.luni && imag.luni.includes(luna_curenta)) { %>
+                            <picture>
+                                <source srcset="<%- imag.fisier_mediu %>" media="screen and (max-width:1000px)"></source>
+                                <img src="<%- imag.fisier %>" alt="briose">
+                            </picture>
+                        <% } %>
+                    <% } %>
+
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+<!--                    <figure>-->
+<!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->
+<!--                        <figcaption>Briose</figcaption>-->
+<!--                    </figure>-->
+                </div>
+            </section>
         </main>
     <%- include("../fragmente/footer.ejs") %>
     </body>
