@@ -27,6 +27,7 @@ body {
     font-size: 16px;
     transition: font-size 0.3s ease;
     margin: 5px;
+    padding: 5px;
 }
 
 .bold-text {
@@ -224,7 +225,7 @@ a[href^="http"]:hover::before {
     color: var(--color4);
 }
 
-a:visited {
+a[href^="http"]:visited {
     color: var(--color3);
 }
 

@@ -2,6 +2,28 @@ const express = require("express")
 const path = require("path")
 const fs = require("fs")
 const sharp = require("sharp")
+const sass = require("sass")
+const pg = require("pg")
+
+const Client = pg.Client
+
+client = new Client({
+    database: "proiect",
+    user: "stefan",
+    password: "stefan",
+    host: "localhost",
+    port: 5432
+})
+
+client.connect()
+client.query("select * from prajituri", function(err, rezultat){
+    console.log(err)
+    console.log(rezultat)
+})
+client.query("select * from unnest(enum_range(null::categ_prajitura))", function(err, rezultat){
+    console.log(err)
+    console.log(rezultat)
+})
 
 app = express()
 
@@ -9,7 +31,10 @@ app.set("view engine", "ejs")
 
 obGlobal = {
     obErori: null,
-    obImagini: null
+    obImagini: null,
+    folderScss: path.join(__dirname, "resources/scss"),
+    folderCss: path.join(__dirname, "resources/css"),
+    folderBackup: path.join(__dirname, "backup")
 }
 
 vect_folders = ["temp", "backup", "temp1"]
@@ -19,6 +44,56 @@ for (let folder of vect_folders) {
         fs.mkdirSync(folder_path)
     }
 }
+
+// function compileazaScss(caleScss, caleCss){
+//     console.log("cale:", caleCss)
+//
+//     if(!caleCss){
+//         let numeFisExt = path.basename(caleScss)
+//         let numeFis = numeFisExt.split(".")[0]   /// "a.scss"  -> ["a","scss"]
+//         caleCss = numeFis + ".css"
+//     }
+//
+//     if (!path.isAbsolute(caleScss))
+//         caleScss = path.join(obGlobal.folderScss, caleScss)
+//     if (!path.isAbsolute(caleCss))
+//         caleCss = path.join(obGlobal.folderCss, caleCss)
+//
+//
+//     let caleBackup = path.join(obGlobal.folderBackup, "resources/css")
+//     if (!fs.existsSync(caleBackup)) {
+//         fs.mkdirSync(caleBackup, {recursive: true})
+//     }
+//
+//     // la acest punct avem cai absolute in caleScss si caleCss
+//
+//     let numeFisCss = path.basename(caleCss)
+//     if (fs.existsSync(caleCss)) {
+//         fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resources/css", numeFisCss)) // + (new Date()).getTime()
+//     }
+//     rez = sass.compile(caleScss, {"sourceMap": true})
+//     fs.writeFileSync(caleCss, rez.css)
+//     //console.log("Compilare SCSS", rez);
+// }
+
+//compileazaScss("a.scss");
+// la pornirea serverului
+// vFisiere = fs.readdirSync(obGlobal.folderScss)
+// for(let numeFis of vFisiere) {
+//     if (path.extname(numeFis) == ".scss") {
+//         compileazaScss(numeFis)
+//     }
+// }
+
+// fs.watch(obGlobal.folderScss, function(eveniment, numeFis) {
+//     console.log(eveniment, numeFis)
+//     if (eveniment=="change" || eveniment=="rename") {
+//         let caleCompleta = path.join(obGlobal.folderScss, numeFis)
+//         if (fs.existsSync(caleCompleta)) {
+//             compileazaScss(caleCompleta)
+//         }
+//     }
+// })
 
 function initErori(){
     let continut = fs.readFileSync(path.join(__dirname,"resources/json/erori.json")).toString("utf-8")
@@ -109,6 +184,27 @@ app.get("/abc", function(req, res, next) {
 
 app.get("/favicon.ico", function(req, res) {
     res.sendFile(path.join(__dirname, "resources/img/favicon/favicon.ico"))
+})
+
+app.get("/produse", function(req, res) {
+    console.log(req.query)
+    var conditieQuery = "" // TO DO where din parametri
+
+    queryOptiuni = "select * from unnest(enum_range(null::categ_prajitura))"
+    client.query(queryOptiuni, function(err, rezOptiuni) {
+        console.log(rezOptiuni)
+
+        queryProduse = "select * from prajituri"
+        client.query(queryProduse, function(err, rez) {
+            if (err) {
+                console.log(err)
+                afisareEroare(res, 2)
+            }
+            else {
+                res.render("pagini/produse", {produse: rez.rows, optiuni: rezOptiuni.rows})
+            }
+        })
+    })
 })
 
 app.get(/^\/resources\/[a-zA-Z0-9_\/]*$/, function(req, res, next) {
