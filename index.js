@@ -16,11 +16,11 @@ client = new Client({
 })
 
 client.connect()
-client.query("select * from prajituri", function(err, rezultat){
+client.query("select * from produse", function(err, rezultat){
     console.log(err)
     console.log(rezultat)
 })
-client.query("select * from unnest(enum_range(null::categ_prajitura))", function(err, rezultat){
+client.query("select * from unnest(enum_range(null::categorii))", function(err, rezultat){
     console.log(err)
     console.log(rezultat)
 })
@@ -45,55 +45,60 @@ for (let folder of vect_folders) {
     }
 }
 
-// function compileazaScss(caleScss, caleCss){
-//     console.log("cale:", caleCss)
-//
-//     if(!caleCss){
-//         let numeFisExt = path.basename(caleScss)
-//         let numeFis = numeFisExt.split(".")[0]   /// "a.scss"  -> ["a","scss"]
-//         caleCss = numeFis + ".css"
-//     }
-//
-//     if (!path.isAbsolute(caleScss))
-//         caleScss = path.join(obGlobal.folderScss, caleScss)
-//     if (!path.isAbsolute(caleCss))
-//         caleCss = path.join(obGlobal.folderCss, caleCss)
-//
-//
-//     let caleBackup = path.join(obGlobal.folderBackup, "resources/css")
-//     if (!fs.existsSync(caleBackup)) {
-//         fs.mkdirSync(caleBackup, {recursive: true})
-//     }
-//
-//     // la acest punct avem cai absolute in caleScss si caleCss
-//
-//     let numeFisCss = path.basename(caleCss)
-//     if (fs.existsSync(caleCss)) {
-//         fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resources/css", numeFisCss)) // + (new Date()).getTime()
-//     }
-//     rez = sass.compile(caleScss, {"sourceMap": true})
-//     fs.writeFileSync(caleCss, rez.css)
-//     //console.log("Compilare SCSS", rez);
-// }
+function compileazaScss(caleScss, caleCss){
+    console.log("cale:", caleCss)
 
-//compileazaScss("a.scss");
-// la pornirea serverului
-// vFisiere = fs.readdirSync(obGlobal.folderScss)
-// for(let numeFis of vFisiere) {
-//     if (path.extname(numeFis) == ".scss") {
-//         compileazaScss(numeFis)
-//     }
-// }
+    if(!caleCss){
+        let numeFisExt = path.basename(caleScss)
+        let numeFis = numeFisExt.split(".")[0]   /// "a.scss"  -> ["a","scss"]
+        caleCss = numeFis + ".css"
+    }
 
-// fs.watch(obGlobal.folderScss, function(eveniment, numeFis) {
-//     console.log(eveniment, numeFis)
-//     if (eveniment=="change" || eveniment=="rename") {
-//         let caleCompleta = path.join(obGlobal.folderScss, numeFis)
-//         if (fs.existsSync(caleCompleta)) {
-//             compileazaScss(caleCompleta)
-//         }
-//     }
-// })
+    if (!path.isAbsolute(caleScss))
+        caleScss = path.join(obGlobal.folderScss, caleScss)
+    if (!path.isAbsolute(caleCss))
+        caleCss = path.join(obGlobal.folderCss, caleCss)
+
+
+    let caleBackup = path.join(obGlobal.folderBackup, "resources/css")
+    if (!fs.existsSync(caleBackup)) {
+        fs.mkdirSync(caleBackup, {recursive: true})
+    }
+
+    // la acest punct avem cai absolute in caleScss si caleCss
+
+    let numeFisCss = path.basename(caleCss)
+    let timestamp = Date.now(); // ex: 1681124489791
+    let numeFisCssFaraExt = numeFisCss.split(".")[0]; // "a"
+    let extensie = path.extname(numeFisCss); // ".css"
+
+    if (fs.existsSync(caleCss)) {
+        //fs.copyFileSync(caleCss, path.join(obGlobal.folderBackup, "resources/css", numeFisCss)) // + (new Date()).getTime()
+        let caleBackupComplet = path.join(caleBackup, `${numeFisCssFaraExt}_${timestamp}${extensie}`);
+        fs.copyFileSync(caleCss, caleBackupComplet)
+    }
+    let rez = sass.compile(caleScss, {"sourceMap": true})
+    fs.writeFileSync(caleCss, rez.css)
+    console.log("Compilare SCSS", rez);
+}
+
+vFisiere = fs.readdirSync(obGlobal.folderScss)
+for(let numeFis of vFisiere) {
+    if (path.extname(numeFis) == ".scss") {
+        compileazaScss(numeFis)
+    }
+}
+
+fs.watch(obGlobal.folderScss, function(eveniment, numeFis) {
+    console.log(eveniment, numeFis)
+
+    if ((eveniment == "change" || eveniment == "rename") && !numeFis.endsWith("~")) {
+        let caleCompleta = path.join(obGlobal.folderScss, numeFis)
+        if (fs.existsSync(caleCompleta)) {
+            compileazaScss(caleCompleta)
+        }
+    }
+})
 
 function initErori(){
     let continut = fs.readFileSync(path.join(__dirname,"resources/json/erori.json")).toString("utf-8")
@@ -162,24 +167,10 @@ console.log("Cale fisier index.js: ", __filename)
 console.log("Folderul de lucru: ", process.cwd())
 
 app.use("/resources", express.static(path.join(__dirname, "resources")))
-// app.use("/node_modules", express.static(path.join(__dirname, "node_modules")))
-
-app.get("/cerere", function(req, res) {
-    res.send("<p style = 'color: green;'>Buna ziua!</p>")
-})
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'js')));
 
 app.get(["/", "/home", "/index"], function(req, res) {
     res.render("pagini/index", {IP: req.ip, imagini: obGlobal.obImagini.imagini})
-})
-
-app.get("/abc", function(req, res, next) {
-    res.write("Data curenta: ")
-    next()
-})
-
-app.get("/abc", function(req, res, next) {
-    res.write((new Date()) + "")
-    res.end()
 })
 
 app.get("/favicon.ico", function(req, res) {
@@ -187,25 +178,113 @@ app.get("/favicon.ico", function(req, res) {
 })
 
 app.get("/produse", function(req, res) {
-    console.log(req.query)
-    var conditieQuery = "" // TO DO where din parametri
+    console.log("Query primit:", req.query)
+    const categorieSelectata = req.query.tip_produs
 
-    queryOptiuni = "select * from unnest(enum_range(null::categ_prajitura))"
+    let conditieQuery = ""
+    let parametrii = []
+
+    if (categorieSelectata && categorieSelectata !== "toate") {
+        conditieQuery = " WHERE tip_produs = $1"
+        parametrii.push(categorieSelectata)
+    }
+
+    const queryOptiuni = "SELECT unnest(enum_range(NULL::tipuri_produse)) AS unnest"
+
     client.query(queryOptiuni, function(err, rezOptiuni) {
-        console.log(rezOptiuni)
+        if (err) {
+            console.error("Eroare la enum:", err)
+            return afisareEroare(res, 2)
+        }
 
-        queryProduse = "select * from prajituri"
-        client.query(queryProduse, function(err, rez) {
+        const queryProduse = "SELECT * FROM produse" + conditieQuery
+
+        client.query(queryProduse, parametrii, function(err, rez) {
             if (err) {
-                console.log(err)
-                afisareEroare(res, 2)
+                console.error("Eroare la produse:", err)
+                return afisareEroare(res, 2)
             }
-            else {
-                res.render("pagini/produse", {produse: rez.rows, optiuni: rezOptiuni.rows})
+
+            const produse = rez.rows
+            const produsePerTip = {}
+
+            produse.forEach(prod => {
+                if (!produsePerTip[prod.tip_produs]) {
+                    produsePerTip[prod.tip_produs] = prod;
+                } else {
+                    if (parseFloat(prod.pret) < parseFloat(produsePerTip[prod.tip_produs].pret)) {
+                        produsePerTip[prod.tip_produs] = prod;
+                    }
+                }
+            });
+
+            produse.forEach(prod => {
+                if (produsePerTip[prod.tip_produs] && produsePerTip[prod.tip_produs].id === prod.id) {
+                    prod.isCelMaiIeftin = true;
+                } else {
+                    prod.isCelMaiIeftin = false;
+                }
+            });
+
+            res.render("pagini/produse", {
+                produse: rez.rows,
+                optiuni: rezOptiuni.rows,
+                nrProduse: rez.rows.length
+            });
+        });
+    });
+});
+
+app.get("/produs/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+
+    client.query("SELECT * FROM produse WHERE id = $1", [id], function(err, result) {
+        if (err) {
+            console.error("Eroare la interogare produs:", err);
+            return afisareEroare(res, 2);
+        }
+
+        if (result.rows.length === 0) {
+            return res.status(404).render("pagini/404", { idCautat: id });
+        }
+
+        const produs = result.rows[0]
+
+        const caleImagine = produs.imagine
+        const folderProdus = caleImagine.split("/")[4]
+        const folderAbsolut = path.join(__dirname, "resources", "img", "produse", folderProdus)
+
+        let imagini = []
+
+        try {
+            const fisiere = fs.readdirSync(folderAbsolut)
+            imagini = fisiere.filter(f => f.toLowerCase().endsWith('.png'))
+                             .sort()
+                             .map(f => `/resources/img/produse/${folderProdus}/${f}`);
+        } catch (e) {
+            console.error("Eroare la citire imagini:", e);
+        }
+
+        const querySimilare = `
+            SELECT id, nume, imagine, pret FROM produse 
+            WHERE categorie = $1 AND id <> $2
+            LIMIT 4
+        `;
+
+        client.query(querySimilare, [produs.categorie, produs.id], function(err2, rezSimilare) {
+            if (err2) {
+                console.error("Eroare la interogare produse similare:", err2);
+                return afisareEroare(res, 2);
             }
-        })
-    })
-})
+
+            res.render("pagini/produs", {
+                produs,
+                imagini,
+                produse_similare: rezSimilare.rows
+            });
+        });
+    });
+});
 
 app.get(/^\/resources\/[a-zA-Z0-9_\/]*$/, function(req, res, next) {
     afisareEroare(res, 403)

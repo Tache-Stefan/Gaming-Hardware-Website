@@ -1,0 +1,26 @@
+@use '../../node_modules/bootstrap/scss/bootstrap' with (
+  $primary: #212A31,
+  $secondary: #2E3944,
+  $btn-color: black,
+  $grid-breakpoints: (
+    sm: 800px,
+    md: 1000px,
+    lg: 1200px
+  ),
+  $border-radius-sm: 0.25rem,
+  $border-radius: 0.5rem,
+  $border-radius-lg: 0.75rem,
+  //$font-size-h1: 2.5rem,
+  //$font-size-h2: 2rem,
+  //$font-size-h3: 1.75rem,
+  //$font-size-h4: 1.5rem,
+  //$font-size-h5: 1.25rem,
+  //$font-size-h6: 1rem,
+  $font-family-base: "Roboto Condensed, sans-serif",
+  $btn-border-radius: 0.25rem,
+  $border-width: 2px,
+  $form-range-thumb-width: 1.5rem,
+  $form-range-thumb-height: 1.5rem,
+  $form-range-thumb-bg: var(--color1),
+  $form-range-track-bg: var(--color4)
+);

@@ -1,0 +1,40 @@
+main a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    background-image: radial-gradient(circle,
+    var(--color2) 0%,
+    var(--color2) 40%,
+    transparent 80%,
+    transparent 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0 0;
+    transition: background-size 0.4s ease;
+}
+
+main a:hover {
+    background-size: 100% 100%;
+}
+
+a[href^="http"]::before {
+    content: "⮳";
+    font-size: 1.5em;
+    margin-right: 0.25em;
+    vertical-align: middle;
+    color: blue;
+    transition: color 0.3s ease;
+}
+
+a[href^="http"]:hover::before {
+    color: var(--color4);
+}
+
+a[href^="http"]:visited {
+    color: var(--color3);
+}
+
+a:active {
+    border: 2px solid var(--color4);
+}

@@ -13,8 +13,11 @@
         <main>
             <div id = "grid-initial">
                 <section id = "welcome">
-                    <h2>Bine ați venit!</h2>
-                    <p>IP: <%- locals.IP %></p>
+                    <h2 class="heading">
+                        Bine ați venit!
+                        <span class="reflected-heading">Bine ați venit!</span>
+                    </h2>
+<!--                    <p>IP: <%- locals.IP %></p>-->
                 </section>
                 <section id = "jocuri">
                     <h2>Jocuri</h2>
@@ -98,6 +101,7 @@
                     </map>
                 </div>
             </div>
+            <hr class = "custom-hr">
             <div id = "game-sales">
                 <h2>Vânzări Jocuri Populare</h2>
                 <div class = "table-container">
@@ -175,19 +179,31 @@
                 <h2>Galerie</h2>
                 <div id="grid-galerie">
                     <%
-                    vect_luni = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie",
-                                 "octombrie", "noiembrie", "decembrie"]
-                    d = new Date()
-                    luna_curenta = vect_luni[d.getMonth()]
+                    const positions = [
+                        "a1", "a2", "a3",
+                        "b1",       "b3",
+                        "c1",       "c3",
+                        "d1",       "d3",
+                        "e1", "e2", "e3"
+                    ];
+                    const minutes = new Date().getMinutes()
+                    const quarter = Math.floor(minutes / 15) + 1
 
+                    let index = 0;
                     for (let imag of locals.imagini) { %>
-                        <% if (imag.luni && imag.luni.includes(luna_curenta)) { %>
-                            <picture>
-                                <source srcset="<%- imag.fisier_mediu %>" media="screen and (max-width:1000px)"></source>
-                                <img src="<%- imag.fisier %>" alt="briose">
-                            </picture>
-                        <% } %>
-                    <% } %>
+                        <% if (imag.sfert_ora === quarter && index < positions.length) {
+                            const titlu = imag.titlu
+                            const altText = imag.fisier
+                            const area = positions[index++]
+                        %>
+                            <figure class = "grid-item" style="grid-area: <%- area %>">
+                                <picture>
+                                    <source srcset="<%- imag.fisier_mediu %>" media="screen and (max-width:1000px)">
+                                    <img src="<%- imag.fisier %>" alt="<%- altText %>" title="<%- titlu %>">
+                                </picture>
+                                <figcaption><%- titlu %></figcaption>
+                            </figure>
+                    <% } } %>
 
 <!--                    <figure>-->
 <!--                        <img src="/resources/img/briose-frisca.png" alt="briose">-->

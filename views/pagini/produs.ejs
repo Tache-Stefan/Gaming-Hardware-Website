@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <title>Gaming & Hardware</title>
+        <meta name = "keywords" content = "jocuri, gaming, PC, PS5, XBOX">
+        <meta name = "description" content = "Jocuri digitale si accesorii.">
+
+        <%- include("../fragmente/head.ejs") %>
+        <link href="/resources/css/produs.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <%- include("../fragmente/header.ejs") %>
+
+    <main>
+        <section>
+            <h2><%- locals.produs.nume %></h2>
+
+            <article id="art-produs">
+                <p>
+                    Tip:
+                    <span><%- locals.produs.tip_produs %></span>
+                </p>
+                <p>
+                    Pret:
+                    <span><%- locals.produs.pret %>€</span>
+                </p>
+                <p>
+                    Descriere:
+                    <span><%- locals.produs.descriere %></span>
+                </p>
+                <p>
+                    Nota:
+                    <span><%- locals.produs.nota %></span>
+                </p>
+                <p>
+                    Categorie:
+                    <span><%- locals.produs.categorie %></span>
+                </p>
+                <p>
+                    Data aparitie:
+                    <%
+                    const luni = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
+                        "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
+                    const zile = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
+                    const data = new Date(produs.data_aparitie);
+                    const zi = data.getDate();
+                    const luna = luni[data.getMonth()];
+                    const an = data.getFullYear();
+                    const dataFormat = `${zi} ${luna} ${an}`;
+                    %>
+                    <time datetime="<%= data.toISOString() %>"><%= dataFormat %></time>
+                </p>
+                <p>
+                    Caracteristici:
+                    <span><%- locals.produs.caracteristici %></span>
+                </p>
+                <figure class="imag-produs">
+                    <div id="carouselImaginiProdus" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <% imagini.forEach((img, index) => { %>
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                    <img src="<%= img %>" class="d-block w-100" alt="Imagine <%- produs.nume %> <%= index+1 %>">
+                                </div>
+                            <% }) %>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselImaginiProdus" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselImaginiProdus" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Urmator</span>
+                        </button>
+                    </div>
+                </figure>
+            </article>
+
+            <section id="similare">
+                <h3>Produse similare</h3>
+                <div class="grid-similare">
+                    <% produse_similare.forEach(p => { %>
+                        <div class="card-similar">
+                            <a href="/produs/<%= p.id %>">
+                                <img src="<%= p.imagine %>" alt="Imagine <%= p.nume %>">
+                                <h4><%= p.nume %></h4>
+                            </a>
+                            <p>Pret: <%= p.pret %>€</p>
+                        </div>
+                    <% }) %>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer.ejs") %>
+    </body>
+</html>

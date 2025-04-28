@@ -1,0 +1,101 @@
+{
+	"cale_galerie": "resources/img/galerie",
+	"imagini": [
+		{
+			"fisier": "aoe4.png",
+			"titlu": "Age of Empires IV",
+			"sfert_ora": 1
+		},
+		{
+			"fisier": "fallout76.png",
+			"titlu": "Fallout 76",
+			"sfert_ora": 2
+			
+		},
+		{
+			"fisier": "witcher3.png",
+			"titlu": "The Witcher 3: Wild Hunt",
+			"sfert_ora": 3
+		},
+		{
+			"fisier": "ac_evo.png",
+			"titlu": "Assetto Corsa EVO",
+			"sfert_ora": 4
+		},
+		{
+			"fisier": "boi.png",
+			"titlu": "Binding of Isaac: Rebirth",
+			"sfert_ora": 1
+		},
+		{
+			"fisier": "cities_skylines.png",
+			"titlu": "Cities Skylines",
+			"sfert_ora": 2
+		},
+		{
+			"fisier": "cs2.png",
+			"titlu": "Counter Strike 2",
+			"sfert_ora": 3
+		},
+		{
+			"fisier": "minecraft.png",
+			"titlu": "Minecraft",
+			"sfert_ora": 4
+		},
+		{
+			"fisier": "gta5.png",
+			"titlu": "Grand Theft Auto 5",
+			"sfert_ora": 1
+		},
+		{
+			"fisier": "rdr2.png",
+			"titlu": "Red Dead Redemption 2",
+			"sfert_ora": 2
+		},
+		{
+			"fisier": "gta4.png",
+			"titlu": "Grand Theft Auto 4",
+			"sfert_ora": 3
+		},
+		{
+			"fisier": "dishonored.png",
+			"titlu": "Dishonored",
+			"sfert_ora": 4
+		},
+		{
+			"fisier": "split_fiction.png",
+			"titlu": "Split Fiction",
+			"sfert_ora": 1
+		},
+		{
+			"fisier": "dbd.png",
+			"titlu": "Dead By Daylight",
+			"sfert_ora": 2
+		},
+		{
+			"fisier": "terraria.png",
+			"titlu": "Terraria",
+			"sfert_ora": 3
+		},
+		{
+			"fisier": "ac_origins.png",
+			"titlu": "Assassin's Creed: Origins",
+			"sfert_ora": 4
+		},
+		{
+			"fisier": "eu4.png",
+			"titlu": "Europa Universalis 4",
+			"sfert_ora": 1
+		},
+		{
+			"fisier": "hoi4.png",
+			"titlu": "Hearts of Iron 4",
+			"sfert_ora": 2
+		},
+		{
+			"fisier": "prison_architect.png",
+			"titlu": "Prison Architect",
+			"sfert_ora": 3
+		}
+	]
+}

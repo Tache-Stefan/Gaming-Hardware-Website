@@ -1,0 +1,56 @@
+h2 {
+    padding: 0.4rem;
+    text-align: center;
+}
+
+#art-produs {
+    margin: 0 auto;
+    width: 70%;
+    background-color: var(--color4);
+    max-width: 700px;
+    box-shadow: 0 0 10px 5px grey;
+    padding: 0.4rem;
+    border-radius: 10px;
+}
+
+#art-produs p {
+    margin: 0;
+    padding: 0.4rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#art-produs p span {
+    font-weight: normal;
+}
+
+.imag-produs {
+    text-align: center;
+}
+
+.imag-produs img {
+    width: 50%;
+    height: auto;
+}
+
+#similare {
+    margin-top: 2rem;
+}
+
+.grid-similare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.card-similar {
+    padding: 1rem;
+    text-align: center;
+    background: var(--color5);
+}
+
+.card-similar img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}

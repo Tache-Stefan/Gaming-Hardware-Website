@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <title>Gaming & Hardware</title>
+        <meta name = "keywords" content = "jocuri, gaming, PC, PS5, XBOX">
+        <meta name = "description" content = "Jocuri digitale si accesorii.">
+        <link rel = "stylesheet" href = "/resources/css/produse.css" type = "text/css">
+        <script src="/resources/js/produse.js"></script>
+
+        <%- include("../fragmente/head.ejs") %>
+    </head>
+    <body>
+    <%- include("../fragmente/header") %>
+
+    <main>
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <button id="calculeaza-media" class="btn btn-primary btn-sm">Calculeaza media preturilor produselor vizibile</button>
+                    <span id="rezultat-media"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <label for="inp-nume">Nume:</label>
+                    <input type="text" id="inp-nume" class="form-control form-control-sm w-auto d-inline-block">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <p>Pret:</p>
+                    <div class="btn-group" role="group" aria-label="Filtrare dupa pret">
+                        <input type="radio" class="btn-check" name="gr_rad" id="i_rad1" value="0:20.00" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="i_rad1">Mic (&lt; 20€)</label>
+
+                        <input type="radio" class="btn-check" name="gr_rad" id="i_rad2" value="20.00:60.00" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="i_rad2">Mediu (20-60€)</label>
+
+                        <input type="radio" class="btn-check" name="gr_rad" id="i_rad3" value="60.00:200.00" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="i_rad3">Mare (&gt; 60€)</label>
+
+                        <input type="radio" class="btn-check" name="gr_rad" id="i_rad4" value="toate" checked autocomplete="off">
+                        <label class="btn btn-outline-primary" for="i_rad4">Orice</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <label for="inp-nota">Nota minima:</label>
+                    <input type="range" id="inp-nota" value="0" min="0" max="10" step="0.5" class="form-range">
+                    <span id="infoRange">(0)</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <p>Pentru minori:</p>
+                    <label><input type="radio" name="filtru-minori" value="toate" checked> Toate</label>
+                    <label><input type="radio" name="filtru-minori" value="true"> Da</label>
+                    <label><input type="radio" name="filtru-minori" value="false"> Nu</label>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <label for="inp-tip">Select simplu:</label>
+                    <select id="inp-tip" class="form-control form-control-sm">
+                        <option id="sel-toate" selected value="toate">toate</option>
+                        <% for (let opt of locals.optiuni) { %>
+                            <option value="<%- opt.unnest %>"> <%- opt.unnest %> </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <button id="filtrare" class="btn btn-success btn-sm">
+                        <i class="bi bi-funnel-fill"></i>
+                        <span class="d-none d-sm-inline">Filtreaza</span>
+                    </button>
+                    <button id="resetare" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        <span class="d-none d-sm-inline">Reseteaza</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12 col-md-6">
+                    <button id="sortCrescNume" class="btn btn-info btn-sm">
+                        <i class="bi bi-sort-up"></i>
+                        <span class="d-none d-sm-inline">Sorteaza crescator dupa nota/pret si categorie</span>
+                    </button>
+                    <button id="sortDescrescNume" class="btn btn-info btn-sm">
+                        <i class="bi bi-sort-down"></i>
+                        <span class="d-none d-sm-inline">Sorteaza descrescator dupa nota/pret si categorie</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+  
+        <section id="produse">
+            <h2>Produse</h2>
+            <p id="nr-produse">Produse afisate: 0</p>
+            <p id="mesaj-filtrare" style="display:none; color: var(--color1); font-style: italic;">
+                Nu exista produse conform filtrarii curente.
+            </p>
+            <div class="grid-produse">
+                <% for (let prod of locals.produse) { %>
+                    <article class="produs categorie_<%- prod.categorie.toLowerCase() %>"
+                             id="elem_<%- prod.id %>"
+                             data-id="<%- prod.id %>"
+                             data-pret="<%- prod.pret %>"
+                             data-nota="<%- prod.nota %>"
+                             data-minori="<%- prod.pentru_minori %>"
+                             data-tip="<%- prod.tip_produs %>"
+                             <% if (prod.isCelMaiIeftin) { %>class="cel-mai-ieftin"<% } %>>
+                        <h3 class="nume">
+                            <a href="/produs/<%- prod.id %>">
+                                <span class="val-nume"><%- prod.nume %></span>
+                            </a>
+                        </h3>
+
+                        <div class="detalii-container">
+                            <table class="info-produse">
+                                <tr>
+                                    <td>Pret:</td>
+                                    <td><%- prod.pret %>€</td>
+                                </tr>
+                                <tr>
+                                    <td>Categorie:</td>
+                                    <td><%- prod.categorie %></td>
+                                </tr>
+                                <tr>
+                                    <td>Caracteristici:</td>
+                                    <td>
+                                        <% if (Array.isArray(prod.caracteristici)) { %>
+                                            <%= prod.caracteristici.join(", ") %>
+                                        <% } else { %>
+                                            <%= prod.caracteristici %>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Data apariție:</td>
+                                    <td>
+                                        <%
+                                            const luni = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
+                                                "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"];
+                                            const zile = ["Duminica", "Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata"];
+                                            const data = new Date(prod.data_aparitie);
+                                            const zi = data.getDate();
+                                            const luna = luni[data.getMonth()];
+                                            const an = data.getFullYear();
+                                            const ziSapt = zile[data.getDay()];
+                                            const dataFormat = `${zi} ${luna} ${an} (${ziSapt})`;
+                                        %>
+                                        <time datetime="<%= data.toISOString() %>"><%= dataFormat %></time>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Pentru minori:</td>
+                                    <td><%= prod.pentru_minori ? "Da" : "Nu" %></td>
+                                </tr>
+                            </table>
+
+                            <figure class="img-produs">
+                                <a href="/produs/<%- prod.id %>">
+                                    <img src="<%- prod.imagine %>" alt="[imagine <%- prod.nume %>]">
+                                </a>
+                            </figure>
+                        </div>
+
+                        <div class="descriere">
+                            <p><%- prod.descriere %></p>
+                            <p class="categorie-afisata">Categorie: <%- prod.categorie %></p>
+                        </div>
+
+                        <button class="btn-toggle-pastrare" data-id="<%= prod.id %>" title="Pastreaza vizibil">
+                            <i class="fa-solid fa-thumbtack"></i>
+                        </button>
+
+                        <button class="btn-hide-temporar btn btn-sm btn-warning ms-1" data-id="<%= prod.id %>" title="Ascunde temporar">
+                            <i class="fa-solid fa-eye-slash"></i>
+                        </button>
+
+                        <button class="btn-hide-session btn btn-sm btn-danger ms-1" data-id="<%= prod.id %>" title="Ascunde permanent">
+                            <i class="fa-solid fa-ban"></i>
+                        </button>
+
+                        <% if (prod.isCelMaiIeftin) { %>
+                            <div class="cel-mai-ieftin-label">
+                                <p><strong>Cel mai ieftin produs din această categorie!</strong></p>
+                            </div>
+                        <% } %>
+                    </article>
+                <% } %>
+            </div>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer") %>
+    </body>
+</html>

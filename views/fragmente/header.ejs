@@ -13,25 +13,36 @@
         <input id="ch-menu" type="checkbox">
         <ul>
             <li class="home-icon">
-                <a href="#">
+                <a href="/#">
                     <i class="fa-solid fa-house"></i>
                     <span class="home-text">Home</span>
                 </a>
             </li>
             <li>
+                <a href = "/produse">Produse</a>
+            </li>
+            <li>
                 <a href = "/#grid-initial">Jocuri & DLC-uri</a>
                 <ul>
-                    <li><a href = "/#jocuri">Jocuri</a></li>
-                    <li><a href = "/#dlc">DLC-uri</a></li>
+                    <li><a href = "/produse?tip_produs=joc">Jocuri</a></li>
+                    <li><a href = "/produse?tip_produs=dlc">DLC-uri</a></li>
                 </ul>
             </li>
             <li>
                 <a href = "/#hardware">Hardware & Accesorii</a>
                 <ul>
-                    <li><a href = "/produse?tip=tastatura">Tastaturi</a></li>
-                    <li><a href = "/produse?tip=mouse">Mouse-uri</a></li>
+                    <li><a href = "/produse?tip_produs=tastatura">Tastaturi</a></li>
+                    <li><a href = "/produse?tip_produs=mouse">Mouse-uri</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
+
+    <div class="container">
+        <h1 class="mt-5">Tema</h1>
+        <label class="form-switch mt-3">
+            <input type="checkbox" id="theme-switch" class="form-check-input">
+            <i id="theme-icon" class="fas fa-sun"></i>
+        </label>
+    </div>
 </header>

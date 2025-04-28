@@ -40,6 +40,7 @@ nav {
   justify-content: center;
   position: relative;
   width: 100%;
+  z-index: 10;
 }
 
 nav ul {
@@ -291,5 +292,3 @@ nav ul li ul li a {
     box-sizing: border-box;
   }
 }
-
-/*# sourceMappingURL=nav.css.map */

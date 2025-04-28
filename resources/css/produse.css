@@ -1,0 +1,143 @@
+main {
+    --padd-main: 1rem;
+    padding-left: var(--padd-main);
+    padding-right: var(--padd-main);
+}
+
+#produse h2 {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.grid-produse {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.grid-produse .produs {
+    border-radius: 2rem;
+    box-shadow: 0 0 0.8rem 0.3rem grey;
+    overflow: hidden;
+}
+
+.grid-produse .produs h3 {
+    background-color: var(--color3);
+    text-align: center;
+    margin-top: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.grid-produse .produs h3 a {
+    color: black;
+}
+
+.grid-produse .produs h3 a:hover {
+    color: white;
+}
+
+.grid-produse .produs figure {
+    text-align: center;
+}
+
+.grid-produse .produs figure img{
+    border: 1px solid grey;
+}
+
+.grid-produse .produs .info-prod{
+    display: flex;
+}
+
+.grid-produse .produs .info-prod p {
+    width: 30%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.grid-produse .produs p.categorie {
+    text-align: center;
+    font-weight: bold;
+}
+
+.info-produse {
+    padding: 0.2rem;
+    box-shadow: 0 0 0.5rem 0.15rem grey;
+    text-align: center;
+}
+
+.produs {
+    position: relative;
+}
+
+/*.marcare {*/
+/*    display: inline-block;*/
+/*    position: absolute;*/
+/*    bottom :0.5rem;*/
+/*    left: 0.5rem;*/
+/*    border-radius: 0.5rem;*/
+/*    text-align: center;*/
+/*    padding: 0.3rem;*/
+/*    border: 1px solid transparent;*/
+/*}*/
+
+/*.marcare:hover {*/
+/*    border: 1px solid pink;*/
+/*}*/
+
+.btn-toggle-pastrare {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: gray;
+    transition: color 0.2s ease;
+}
+
+.btn-toggle-pastrare.active {
+    color: yellow; /* sau altceva distinctiv */
+}
+
+.detalii-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.info-produse {
+    border-collapse: collapse;
+    width: 60%;
+    font-size: 0.95rem;
+}
+
+.info-produse td {
+    padding: 4px 8px;
+    border-bottom: 1px solid;
+    vertical-align: top;
+}
+
+.img-produs img {
+    max-width: 200px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.descriere {
+    margin-top: 1rem;
+    font-style: italic;
+    color: var(--color1);
+    text-align: center;
+}
+
+.val-nume:hover {
+    color: var(--color4);
+}
+
+#calculeaza-media {
+    margin: 4px;
+}

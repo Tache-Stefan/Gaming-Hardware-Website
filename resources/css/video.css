@@ -1,0 +1,33 @@
+video {
+    width: 90%;
+    max-width: 800px;
+    min-width: 300px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+}
+
+video::cue {
+    background: linear-gradient(90deg, var(--color3), var(--color4));
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 1.2em;
+    line-height: 1.4em;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.video-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.responsive-video {
+    width: 90%;
+    max-width: 800px;
+    min-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: block;
+}
