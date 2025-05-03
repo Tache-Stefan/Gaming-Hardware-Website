@@ -1,0 +1,33 @@
+.oferta-banner {
+    background-color: #ffebcc;
+    border: 2px solid #ff9800;
+    padding: 1rem 2rem;
+    margin: 1rem auto;
+    max-width: 700px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255,152,0,0.4);
+    font-size: 1.1rem;
+    animation: pulse-banner 2s infinite;
+}
+
+.oferta-banner h3 {
+    margin-top: 0;
+    color: #e65100;
+}
+
+@keyframes pulse-banner {
+    0% { box-shadow: 0 0 5px rgba(255,152,0,0.4); }
+    50% { box-shadow: 0 0 20px rgba(255,152,0,0.7); }
+    100% { box-shadow: 0 0 5px rgba(255,152,0,0.4); }
+}
+
+#timer-oferta.pulse {
+    animation: pulse-timer 1s infinite;
+}
+
+@keyframes pulse-timer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

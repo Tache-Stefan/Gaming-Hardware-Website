@@ -7,6 +7,15 @@ const pg = require("pg")
 
 const Client = pg.Client
 
+const deleteTime = 60 * 6;
+const intervalVerificare = 5 * 60 * 1000;
+
+const offerTime = 2;
+const intervalOferta = offerTime * 60 * 1000;
+const valoriReduceri = [5,10,15,20,25,30,35,40,45,50];
+
+const deleteOfferTime = 10;
+
 client = new Client({
     database: "proiect",
     user: "stefan",
@@ -46,11 +55,9 @@ for (let folder of vect_folders) {
 }
 
 function compileazaScss(caleScss, caleCss){
-    console.log("cale:", caleCss)
-
     if(!caleCss){
         let numeFisExt = path.basename(caleScss)
-        let numeFis = numeFisExt.split(".")[0]   /// "a.scss"  -> ["a","scss"]
+        let numeFis = numeFisExt.split(".")[0]
         caleCss = numeFis + ".css"
     }
 
@@ -79,7 +86,28 @@ function compileazaScss(caleScss, caleCss){
     }
     let rez = sass.compile(caleScss, {"sourceMap": true})
     fs.writeFileSync(caleCss, rez.css)
-    console.log("Compilare SCSS", rez);
+}
+
+function stergeBackup() {
+    const caleBackup = path.join(obGlobal.folderBackup, "resources/css");
+
+    if (!fs.existsSync(caleBackup)) {
+        return;
+    }
+
+    const fisiere = fs.readdirSync(caleBackup);
+    const acum = Date.now();
+    const prag = deleteTime * 60 * 1000;
+
+    fisiere.forEach(fisier => {
+        const caleFisier = path.join(caleBackup, fisier);
+        const stats = fs.statSync(caleFisier);
+        const timpModificare = stats.mtimeMs;
+
+        if (acum - timpModificare > prag) {
+            fs.unlinkSync(caleFisier);
+        }
+    })
 }
 
 vFisiere = fs.readdirSync(obGlobal.folderScss)
@@ -87,6 +115,64 @@ for(let numeFis of vFisiere) {
     if (path.extname(numeFis) == ".scss") {
         compileazaScss(numeFis)
     }
+}
+
+function genereazaOferta() {
+    let caleOferte = path.join(__dirname, "resources/json/oferte.json");
+
+    client.query("SELECT unnest(enum_range(NULL::categorii)) AS categorie", function(err, rezCategorie) {
+        if (err) {
+            console.error("Eroare interogare categorii:", err);
+            return;
+        }
+
+        let categorii = rezCategorie.rows.map(row => row.categorie);
+        if (categorii.length == 0) {
+            return;
+        }
+
+        let oferte = [];
+        if (fs.existsSync(caleOferte)) {
+            let continut = fs.readFileSync(caleOferte).toString("utf-8");
+            try {
+                let json = JSON.parse(continut);
+                let acum = new Date();
+                let pragStergere = deleteOfferTime * 60 * 1000;
+
+                oferte = (json.oferte || []).filter(oferta => {
+                    let dataFinalizare = new Date(oferta["data-finalizare"]);
+                    return dataFinalizare > acum || (acum - dataFinalizare) <= pragStergere;
+                });
+            } catch (e) {
+                console.error("Eroare la parsare oferte.json:", e);
+            }
+        }
+
+        let ultimaCategorie = oferte.length > 0 ? oferte[0]["categorie"] : null;
+
+        let categoriiDisponibile = categorii.filter(cat => cat !== ultimaCategorie);
+        if (categoriiDisponibile.length == 0) {
+            console.error("Nu exista alte categorii disponibile");
+            return;
+        }
+
+        let categorieAleasa = categoriiDisponibile[Math.floor(Math.random() * categoriiDisponibile.length)];
+        let reducere = valoriReduceri[Math.floor(Math.random() * valoriReduceri.length)];
+
+        let dataIncepere = new Date();
+        let dataFinalizare = new Date(dataIncepere.getTime() + intervalOferta);
+
+        let ofertaNoua = {
+            "categorie": categorieAleasa,
+            "data-incepere": dataIncepere.toISOString(),
+            "data-finalizare": dataFinalizare.toISOString(),
+            "reducere": reducere
+        };
+
+        let vectorOferte = [ofertaNoua, ...oferte];
+        fs.writeFileSync(caleOferte, JSON.stringify({oferte: vectorOferte}, null, 2));
+        console.log("Oferta generata:", ofertaNoua);
+    })
 }
 
 fs.watch(obGlobal.folderScss, function(eveniment, numeFis) {
@@ -170,7 +256,23 @@ app.use("/resources", express.static(path.join(__dirname, "resources")))
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'js')));
 
 app.get(["/", "/home", "/index"], function(req, res) {
-    res.render("pagini/index", {IP: req.ip, imagini: obGlobal.obImagini.imagini})
+    let caleOferte = path.join(__dirname, "resources/json/oferte.json");
+    let ofertaCurenta = null;
+
+    try {
+        let continutOferte = fs.readFileSync(caleOferte, "utf-8");
+        let jsonOferte = JSON.parse(continutOferte);
+        if (jsonOferte.oferte && jsonOferte.oferte.length > 0) {
+            ofertaCurenta = jsonOferte.oferte[0];
+        }
+    } catch (err) {
+        console.error("Eroare la citirea ofertelor:", err);
+    }
+
+    res.render("pagini/index", {IP: req.ip,
+        imagini: obGlobal.obImagini.imagini,
+        oferta: ofertaCurenta
+    })
 })
 
 app.get("/favicon.ico", function(req, res) {
@@ -317,5 +419,9 @@ app.get("/*", function(req, res, next) {
     }
 })
 
-app.listen(8080)
-console.log("Serverul a pornit")
+setInterval(stergeBackup, intervalVerificare);
+setInterval(genereazaOferta, intervalOferta);
+genereazaOferta();
+
+app.listen(8080);
+console.log("Serverul a pornit");

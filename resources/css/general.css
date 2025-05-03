@@ -32,11 +32,11 @@ body {
 }
 
 [data-theme="dark"] {
-    --color1: #E5E7EB;   /* Lighter text for dark background (off-white) */
-    --color2: #9CA3AF;   /* Slightly lighter background for contrast */
-    --color3: #58A6FF;   /* Accent color (deep blue) */
-    --color4: #4B5563;   /* Lighter background element, not too harsh */
-    --color5: #1F2937;   /* Dark background for the overall page */
+    --color1: #E5E7EB;
+    --color2: #9CA3AF;
+    --color3: #58A6FF;
+    --color4: #4B5563;
+    --color5: #1F2937;
 }
 
 .bold-text {

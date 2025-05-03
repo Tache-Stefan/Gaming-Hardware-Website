@@ -6,6 +6,7 @@
         <meta name = "description" content = "Jocuri digitale si accesorii.">
 
         <%- include("../fragmente/head.ejs") %>
+        <link rel = "stylesheet" href = "/resources/css/oferta.css" type = "text/css">
     </head>
     <body>
         <%- include("../fragmente/header.ejs") %>
@@ -175,6 +176,21 @@
                                 label="English">
                 </video>
             </div>
+
+            <% if (locals.oferta) { %>
+                <section id="anunt-oferta">
+                    <div class="oferta-banner">
+                        <h3>Oferta speciala!</h3>
+                        <p>
+                            <strong><%= oferta.reducere %>% reducere</strong> la categoria <strong><%= oferta.categorie %></strong><br>
+                            <span>(valabila între <%= (new Date(oferta["data-incepere"])).toLocaleString("ro-RO") %> si <%= (new Date(oferta["data-finalizare"])).toLocaleString("ro-RO") %>)</span><br>
+                            <span id="timer-oferta" data-final="<%= oferta['data-finalizare'] %>">Timp ramas: ...</span>
+                        </p>
+                    </div>
+                </section>
+                <script src="/resources/js/timer.js"></script>
+            <% } %>
+
             <section id="galerie-statica">
                 <h2>Galerie</h2>
                 <div id="grid-galerie">
